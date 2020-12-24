@@ -20,7 +20,7 @@
     "MapleApi": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "weatherforecast",
+      "launchUrl": "api/maple",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
