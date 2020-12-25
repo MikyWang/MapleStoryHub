@@ -6,6 +6,9 @@
 
   <ItemGroup>
     <ProjectReference Include="..\WzLib\WzLib.csproj" />
+    <ProjectReference Include="..\MapleLib\MapleLib.csproj">
+      <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
+    </ProjectReference>
   </ItemGroup>
 
   <ItemGroup>
