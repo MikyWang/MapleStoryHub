@@ -13,6 +13,9 @@
 
   <ItemGroup>
     <Folder Include="Controllers\" />
+    <Folder Include="Service\" />
+    <Folder Include="ServiceImp\" />
+    <Folder Include="Extentions\" />
   </ItemGroup>
 
 
