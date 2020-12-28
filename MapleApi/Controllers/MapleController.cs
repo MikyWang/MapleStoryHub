@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using MapleApi.Extentions;
+using MapleApi.Service;
+using MapleLib;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -11,10 +14,17 @@ namespace MapleApi.Controllers
     [ApiController]
     public class MapleController : ControllerBase
     {
-        [HttpGet]
-        public string GetDefault()
+        private readonly INodeService _nodeService;
+
+        public MapleController(INodeService nodeService)
         {
-            return "test";
+            _nodeService = nodeService;
+        }
+
+        [HttpGet]
+        public MapleNode GetDefaultNode()
+        {
+            return _nodeService.BaseNode.ToNode();
         }
     }
 }

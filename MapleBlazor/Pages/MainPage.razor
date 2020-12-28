@@ -1,0 +1,9 @@
+﻿@page "/"
+@inject NavigationManager Navigator
+
+@code{
+    protected override void OnAfterRender(bool firstRender)
+    {
+        Navigator.NavigateTo("package");
+    }
+}

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using MapleLib;
@@ -145,6 +146,8 @@ namespace MapleApi.Extentions
 
         public static MaplePng ToMaplePng(this Wz_Png wz_Png)
         {
+            if (wz_Png == null) return null;
+
             string base64;
             using (var bmp = wz_Png.ExtractPng())
             {
@@ -163,6 +166,42 @@ namespace MapleApi.Extentions
                 DataLength = wz_Png.DataLength,
                 Form = wz_Png.Form
             };
+        }
+
+        public static MaplePng GetMaplePng(this Wz_Node wz_Node, Wz_Node baseNode)
+        {
+            var nodes = wz_Node.Nodes;
+            var inLinkNode = nodes["_inlink"];
+            var outLinkNode = nodes["_outlink"];
+            MaplePng pngInfo;
+            if (inLinkNode != null)
+            {
+                var link = inLinkNode.Value.ToString().Replace('/', '\\');
+                var node = wz_Node.GetNodeWzImage().Node.SearchNode(link);
+                pngInfo = node.GetValue<Wz_Png>()?.ToMaplePng();
+            }
+            else if (outLinkNode != null)
+            {
+                var link = outLinkNode.Value.ToString().Replace('/', '\\');
+                var node = baseNode.SearchNode(link);
+                pngInfo = node.GetValue<Wz_Png>()?.ToMaplePng();
+            }
+            else
+            {
+                pngInfo = wz_Node.GetValue<Wz_Png>()?.ToMaplePng();
+            }
+            return pngInfo;
+        }
+        public static IDictionary<string, Point> GetMap(this Wz_Node wz_Node)
+        {
+            var map = new Dictionary<string, Point>();
+            var mapNode = wz_Node.Nodes["map"];
+            if (mapNode == null) return null;
+            foreach (var node in mapNode.Nodes)
+            {
+                map.Add(node.Text, node.GetValue<Wz_Vector>());
+            }
+            return map;
         }
     }
 }
